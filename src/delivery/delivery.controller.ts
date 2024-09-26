@@ -8,6 +8,7 @@ import {
   Delete,
   ValidationPipe,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { BorzoService } from './borzo.service';
 import { PriceEstimationDto } from './dto/price-estimation-dto';
@@ -48,8 +49,9 @@ export class DeliveryController {
   }
 
   @Post('/borzo/delivery-updates')
-  async deliveryUpdates(@Body() updates: BorzoDeliveryUpdateDto) {
+  async deliveryUpdates(@Body() updates: any) {
     console.log(updates);
+    new Logger('Delivery Updates').log(updates);
     if (updates.event_type === 'delivery_changed') {
       return this.dbService.registerUpdates(updates.delivery.order_id, {
         deliveryStatus: updates.delivery.status,
