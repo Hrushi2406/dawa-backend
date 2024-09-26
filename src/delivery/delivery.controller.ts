@@ -49,6 +49,7 @@ export class DeliveryController {
 
   @Post('/borzo/delivery-updates')
   async deliveryUpdates(@Body() updates: BorzoDeliveryUpdateDto) {
+    console.log(updates);
     if (updates.event_type === 'delivery_changed') {
       return this.dbService.registerUpdates(updates.delivery.order_id, {
         deliveryStatus: updates.delivery.status,
